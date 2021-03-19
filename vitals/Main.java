@@ -30,16 +30,24 @@ public class Main {
     	float chargeRateLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_CHARGERATE, NORMAL_CHARGERATE, SINGLE_LIMIT).getLimitHolder();
     	String chargeRateMessageList[] = new MessageGenerator("ChargeRate").getOutputMessage();
     	printMessage(chargeRateProcessor.singleLimitMessage(chargeRate, chargeRateLimitHolder, chargeRateMessageList), "Charge Rate");
+    	boolean temperatureCheck = temperatureProcessor.isStatus();
+    	boolean socCheck = socProcessor.isStatus();
+    	boolean chargeRateCheck = chargeRateProcessor.isStatus();
     	
-   		return (temperatureProcessor.isStatus() && socProcessor.isStatus() && chargeRateProcessor.isStatus());    	   	
+    	BreachHandler.isActionNeeded(temperatureCheck, "Temperature");
+    	BreachHandler.isActionNeeded(socCheck, "Charge State");
+    	BreachHandler.isActionNeeded(chargeRateCheck, "Charge Rate");
+    	
+   		return (temperatureCheck && socCheck && chargeRateCheck);    	   	
     }
+    
     
     static void printMessage(String message, String type) {
     	System.out.println(type + " : " +message);
     }
     
     public static void main(String[] args) {
-    	assert(batteryIsOk(25, 70, 0.6f,"C") == true);
+    	assert(batteryIsOk(25, 70, 0.6f,"F") == true);
     	assert(batteryIsOk(44, 24, 0.0f,"C") == false);
     	assert(batteryIsOk(25,10,0.78f,"C") == true);
     	assert(batteryIsOk(25,70,1.0f,"F") == false);
