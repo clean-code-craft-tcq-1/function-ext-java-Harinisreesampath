@@ -38,9 +38,9 @@ public class MeasurementProcessor {
 				if(value > limitHolder[1]) {
 					this.status = false;
 					return messageList[2];}
-				else if(value > limitHolder[0])
+				if(value > limitHolder[0])
 					return messageList[1];
-				else
+				
 					return messageList[0];
 			}
 }
