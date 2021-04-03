@@ -19,12 +19,20 @@ public class Main {
     	MeasurementProcessor temperatureProcessor = new MeasurementProcessor();
     	float temperatureLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_TEMPERATURE, LOWER_TEMPERATURE, DOUBLE_LIMIT).getLimitHolder();
     	String temperatureMessageList[] = new MessageGenerator("Temperature").getOutputMessage();
-    	printMessage(temperatureProcessor.processedMessage(temperature, temperatureLimitHolder, temperatureMessageList), "Temperature");
+    	String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
+    	if(temperatureBreachMessage == null) {
+    		temperatureBreachMessage = temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
+    	}
+    	printMessage(temperatureBreachMessage, "Temperature");
     	
     	MeasurementProcessor socProcessor = new MeasurementProcessor();
     	float socLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_SOC, LOWER_SOC, DOUBLE_LIMIT).getLimitHolder();
     	String socMessageList[] = new MessageGenerator("SOC").getOutputMessage();
-    	printMessage(socProcessor.processedMessage(soc, socLimitHolder, socMessageList), "State of Charge");
+    	String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
+    	if(socBreachMessage == null) {
+    		socBreachMessage = socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
+    	}
+    	printMessage(socBreachMessage, "State of Charge");
     	
     	MeasurementProcessor chargeRateProcessor = new MeasurementProcessor();
     	float chargeRateLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_CHARGERATE, NORMAL_CHARGERATE, SINGLE_LIMIT).getLimitHolder();
@@ -47,7 +55,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
-    	assert(batteryIsOk(25, 70, 0.6f,"F") == true);
+    	System.out.println(batteryIsOk(25, 70, 0.6f,"F") == true);
     	assert(batteryIsOk(44, 24, 0.0f,"C") == false);
     	assert(batteryIsOk(25,10,0.78f,"C") == true);
     	assert(batteryIsOk(25,70,1.0f,"F") == false);
