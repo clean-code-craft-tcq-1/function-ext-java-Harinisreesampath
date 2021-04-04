@@ -9,19 +9,7 @@ public class MeasurementProcessor {
 		return status;
 	}
 	
-	 public String isWarning(float value, float limitHolder[], String messageList[]) {		
-			if(value > limitHolder[1] && value <= limitHolder[2]) {
-			  return messageList[1];
-			  }
-			
-			if(value > limitHolder[3] && value <= limitHolder[4]) {
-				  return messageList[3];
-				  }			
-			
-			return null;
-	 } 
-	
-	 public String islowBreach(float value, float limitHolder[], String messageList[]) {
+	public String islowBreach(float value, float limitHolder[], String messageList[]) {
 			if(value > limitHolder[0] && value <= limitHolder[1]) {
 				this.status = false;
 				return messageList[0];	

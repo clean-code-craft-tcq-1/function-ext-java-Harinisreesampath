@@ -21,7 +21,7 @@ public class Main {
     	String temperatureMessageList[] = new MessageGenerator("Temperature").getOutputMessage();
     	String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
     	if(temperatureBreachMessage == null) {
-    		temperatureBreachMessage = temperatureProcessor.isWarning(temperature, temperatureLimitHolder, temperatureMessageList);
+    		temperatureBreachMessage = WarningMessageSelector.isWarning(temperature, temperatureLimitHolder, temperatureMessageList);
     		if(temperatureBreachMessage ==  null)
      		temperatureBreachMessage = temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
     	}
@@ -32,7 +32,7 @@ public class Main {
     	String socMessageList[] = new MessageGenerator("SOC").getOutputMessage();
     	String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
     	if(socBreachMessage == null) {
-    		socBreachMessage = socProcessor.isWarning(soc, socLimitHolder, socMessageList);
+    		socBreachMessage = WarningMessageSelector.isWarning(soc, socLimitHolder, socMessageList);
     		if(socBreachMessage == null)
     		socBreachMessage = socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
     	}
