@@ -21,7 +21,9 @@ public class Main {
     	String temperatureMessageList[] = new MessageGenerator("Temperature").getOutputMessage();
     	String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
     	if(temperatureBreachMessage == null) {
-    		temperatureBreachMessage = temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
+    		temperatureBreachMessage = temperatureProcessor.isWarning(temperature, temperatureLimitHolder, temperatureMessageList);
+    		if(temperatureBreachMessage ==  null)
+     		temperatureBreachMessage = temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
     	}
     	printMessage(temperatureBreachMessage, "Temperature");
     	
@@ -30,6 +32,8 @@ public class Main {
     	String socMessageList[] = new MessageGenerator("SOC").getOutputMessage();
     	String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
     	if(socBreachMessage == null) {
+    		socBreachMessage = socProcessor.isWarning(soc, socLimitHolder, socMessageList);
+    		if(socBreachMessage == null)
     		socBreachMessage = socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
     	}
     	printMessage(socBreachMessage, "State of Charge");
@@ -56,10 +60,7 @@ public class Main {
     
     public static void main(String[] args) {
     	assert(batteryIsOk(25, 70, 0.6f,"F") == true);
-    	assert(batteryIsOk(44, 24, 0.0f,"C") == false);
-    	assert(batteryIsOk(25,10,0.78f,"C") == true);
-    	assert(batteryIsOk(25,70,1.0f,"F") == false);
-    	assert(batteryIsOk(25,10,0.7f,"F") == false);    	
-    	assert(batteryIsOk(25,70,1,"F") == false);
+    	assert(batteryIsOk(1, 24, 0.0f,"C") == true);
+    	assert(batteryIsOk(25,10,0.78f,"F") == true);
     }
 }
