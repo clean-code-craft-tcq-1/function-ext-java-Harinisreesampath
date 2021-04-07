@@ -19,23 +19,25 @@ public class Main {
     	MeasurementProcessor temperatureProcessor = new MeasurementProcessor();
     	float temperatureLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_TEMPERATURE, LOWER_TEMPERATURE, DOUBLE_LIMIT).getLimitHolder();
     	String temperatureMessageList[] = new MessageGenerator("Temperature").getOutputMessage();
-    	String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
-    	if(temperatureBreachMessage == null) {
+    	//String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
+    	String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList)==null? WarningMessageSelector.isWarning(temperature, temperatureLimitHolder, temperatureMessageList) :temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
+    	/*if(temperatureBreachMessage == null) {
     		temperatureBreachMessage = WarningMessageSelector.isWarning(temperature, temperatureLimitHolder, temperatureMessageList);
     		if(temperatureBreachMessage ==  null)
      		temperatureBreachMessage = temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
-    	}
+    	}*/
     	printMessage(temperatureBreachMessage, "Temperature");
     	
     	MeasurementProcessor socProcessor = new MeasurementProcessor();
     	float socLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_SOC, LOWER_SOC, DOUBLE_LIMIT).getLimitHolder();
     	String socMessageList[] = new MessageGenerator("SOC").getOutputMessage();
-    	String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
-    	if(socBreachMessage == null) {
+    	//String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
+    	String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList)==null? WarningMessageSelector.isWarning(soc, socLimitHolder, socMessageList) :socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
+    	/*if(socBreachMessage == null) {
     		socBreachMessage = WarningMessageSelector.isWarning(soc, socLimitHolder, socMessageList);
     		if(socBreachMessage == null)
     		socBreachMessage = socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
-    	}
+    	}*/
     	printMessage(socBreachMessage, "State of Charge");
     	
     	MeasurementProcessor chargeRateProcessor = new MeasurementProcessor();
