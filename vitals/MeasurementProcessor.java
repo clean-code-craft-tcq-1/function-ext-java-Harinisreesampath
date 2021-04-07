@@ -10,20 +10,13 @@ public class MeasurementProcessor {
 	}
 	
 	public String islowBreach(float value, float limitHolder[], String messageList[]) {
-			if(value > limitHolder[0] && value <= limitHolder[1]) {
-				this.status = false;
-				return messageList[0];	
-				}
-			return null;
+		String breachMessage = value > limitHolder[0] && value <= limitHolder[1]? messageList[0]  : (value > limitHolder[1] && value <= limitHolder[2]?messageList[1]:null);
+			return breachMessage;
 	 }
 	 
 	 public String isHighBreach(float value, float limitHolder[], String messageList[]) {
-				if(value > limitHolder[4]) {
-					this.status = false;
-					return messageList[4];
-					}
-					
-				return messageList[2];
+		 String breachMessage = value > limitHolder[4] ? messageList[4] : (value > limitHolder[3] && value <= limitHolder[4]?messageList[3]:messageList[2]);		
+				return breachMessage;
 	 }
 			
 			public String singleLimitMessage(float value, float limitHolder[], String messageList[]) {
