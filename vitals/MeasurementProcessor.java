@@ -20,12 +20,7 @@ public class MeasurementProcessor {
 	 }
 			
 			public String singleLimitMessage(float value, float limitHolder[], String messageList[]) {
-				if(value > limitHolder[1]) {
-					this.status = false;
-					return messageList[2];}
-				else if(value > limitHolder[0])
-					return messageList[1];
-				else
-					return messageList[0];
+				String breachMessage = value > limitHolder[1] ? messageList[2] : (value > limitHolder[0] ? messageList[1] : messageList[0]);
+				return breachMessage;
 			}
 }
