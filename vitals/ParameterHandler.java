@@ -14,10 +14,10 @@ public class ParameterHandler {
 		MeasurementProcessor socProcessor = new MeasurementProcessor();
 		socProcessor.islowBreach(soc, Main.socLimitHolder, Main.socMessageList);
 		socProcessor.isHighBreach(soc, Main.socLimitHolder, Main.socMessageList);
-		return socProcessor.isViolates(soc, Main.temperatureLimitHolder, Main.socMessageList);
+		return socProcessor.isViolates(soc, Main.socLimitHolder, Main.socMessageList);
 	}
 	public static boolean isChargeRateOk(float chargeRate) {
 		MeasurementProcessor chargeRateProcessor = new MeasurementProcessor();
-		return chargeRateProcessor.singleLimitMessage(chargeRate, Main.temperatureLimitHolder, Main.temperatureMessageList);
+		return chargeRateProcessor.singleLimitMessage(chargeRate, Main.chargeRateLimitHolder, Main.chargeRateMessageList);
 	}
 }

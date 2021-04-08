@@ -8,7 +8,7 @@ public class Main {
 	public static final float LOWER_SOC = 20;
 	public static final float HIGHER_SOC = 80;
 	public static final float HIGHER_CHARGERATE = 0.8f;
-	public static final float NORMAL_CHARGERATE = 0;
+	public static final float NORMAL_CHARGERATE = 0.0f;
 	public static final int SINGLE_LIMIT = 1;
 	public static final int DOUBLE_LIMIT = 2;
 	static float temperatureLimitHolder[];
@@ -47,6 +47,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
+    	assert(batteryIsOk(26, 66, 0.3f,"F") == true);
     	assert(batteryIsOk(1, 24, 0.0f,"F") == false);
     	assert(batteryIsOk(25,10,0.78f,"F") == false);
     }

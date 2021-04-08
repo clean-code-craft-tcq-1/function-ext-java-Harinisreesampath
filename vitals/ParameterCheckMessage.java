@@ -1,6 +1,6 @@
 package vitals;
 
 public class ParameterCheckMessage {
-	public static String breachMessage = "";
+	public static String breachMessage = "NORMAL";
 	
 }
