@@ -47,7 +47,6 @@ public class Main {
     }
     
     public static void main(String[] args) {
-    	assert(batteryIsOk(25, 70, 0.6f,"F") == true);
     	assert(batteryIsOk(1, 24, 0.0f,"C") == true);
     	assert(batteryIsOk(25,10,0.78f,"F") == true);
     }
