@@ -23,19 +23,23 @@ public class Main {
     	temperatureMessageList = new MessageGenerator("Temperature").getOutputMessage();
     	boolean temperatureCheck = ParameterHandler.isTemperatureOk(temperature, measurementUnit);
     	printMessage(ParameterCheckMessage.breachMessage, "Temperature");
+    	ParameterCheckMessage.breachMessage = "NORMAL";
     	
     	socLimitHolder = new LimitCalculator(PERCENTAGE, HIGHER_SOC, LOWER_SOC, DOUBLE_LIMIT).getLimitHolder();
     	socMessageList = new MessageGenerator("SOC").getOutputMessage();
     	boolean socCheck = ParameterHandler.isSOCOk(soc);
     	printMessage(ParameterCheckMessage.breachMessage, "State of Charge");
+    	ParameterCheckMessage.breachMessage = "NORMAL";
     	
     	chargeRateLimitHolder = new LimitCalculator(PERCENTAGE, HIGHER_CHARGERATE, NORMAL_CHARGERATE, SINGLE_LIMIT).getLimitHolder();
     	chargeRateMessageList = new MessageGenerator("ChargeRate").getOutputMessage();
     	boolean chargeRateCheck = ParameterHandler.isChargeRateOk(chargeRate);
     	printMessage(ParameterCheckMessage.breachMessage, "Charge Rate");  	
+    	ParameterCheckMessage.breachMessage = "NORMAL";
+
  	
     	BreachHandler.isActionNeeded(temperatureCheck, "Temperature");
-    	BreachHandler.isActionNeeded(socCheck, "Charge State");
+    	BreachHandler.isActionNeeded(socCheck, "Charge State (SOC)");
     	BreachHandler.isActionNeeded(chargeRateCheck, "Charge Rate");
     	
    		return (temperatureCheck && socCheck && chargeRateCheck);    	   	
@@ -47,8 +51,8 @@ public class Main {
     }
     
     public static void main(String[] args) {
-    	assert(batteryIsOk(26, 66, 0.3f,"F") == true);
-    	assert(batteryIsOk(1, 24, 0.0f,"F") == false);
-    	assert(batteryIsOk(25,10,0.78f,"F") == false);
+    	System.out.println(batteryIsOk(26, 66, 0.3f,"F") == true);
+    	System.out.println(batteryIsOk(1, 84, 0.9f,"C") == false);
+    	System.out.println(batteryIsOk(25,10,0.78f,"F") == true);
     }
 }
