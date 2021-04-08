@@ -11,50 +11,29 @@ public class Main {
 	public static final float NORMAL_CHARGERATE = 0;
 	public static final int SINGLE_LIMIT = 1;
 	public static final int DOUBLE_LIMIT = 2;
+	static float temperatureLimitHolder[];
+	static String temperatureMessageList[];
+	static float socLimitHolder[];
+	static String socMessageList[];
+	static float chargeRateLimitHolder[];
+	static String chargeRateMessageList[];
 	
-    static boolean batteryIsOk(float temperature, float soc, float chargeRate, String measurementUnit) {
-    	if(measurementUnit.equalsIgnoreCase("C"))
-    		temperature = TemperatureUnitConverter.convertingTemperatureToFahrenheit(temperature) ;
-    	
-    	MeasurementProcessor temperatureProcessor = new MeasurementProcessor();
-    	float temperatureLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_TEMPERATURE, LOWER_TEMPERATURE, DOUBLE_LIMIT).getLimitHolder();
-    	String temperatureMessageList[] = new MessageGenerator("Temperature").getOutputMessage();
-    	temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
-    	temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
-    	temperatureProcessor.isViolates(temperature, temperatureLimitHolder, temperatureMessageList);
-    	/*String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList);
-    	String temperatureBreachMessage = temperatureProcessor.islowBreach(temperature, temperatureLimitHolder, temperatureMessageList)==null? temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList) : null;
-    	if(temperatureBreachMessage == null) {
-    		temperatureBreachMessage = WarningMessageSelector.isWarning(temperature, temperatureLimitHolder, temperatureMessageList);
-    		if(temperatureBreachMessage ==  null)
-     		temperatureBreachMessage = temperatureProcessor.isHighBreach(temperature, temperatureLimitHolder, temperatureMessageList);
-    	}*/
+    static boolean batteryIsOk(float temperature, float soc, float chargeRate, String measurementUnit) {   	
+    	temperatureLimitHolder = new LimitCalculator(PERCENTAGE, HIGHER_TEMPERATURE, LOWER_TEMPERATURE, DOUBLE_LIMIT).getLimitHolder();
+    	temperatureMessageList = new MessageGenerator("Temperature").getOutputMessage();
+    	boolean temperatureCheck = ParameterHandler.isTemperatureOk(temperature, measurementUnit);
     	printMessage(ParameterCheckMessage.breachMessage, "Temperature");
     	
-    	MeasurementProcessor socProcessor = new MeasurementProcessor();
-    	float socLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_SOC, LOWER_SOC, DOUBLE_LIMIT).getLimitHolder();
-    	String socMessageList[] = new MessageGenerator("SOC").getOutputMessage();
-    	socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
-    	socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
-    	socProcessor.isViolates(soc, socLimitHolder, socMessageList);
-    	/*String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList);
-    	String socBreachMessage = socProcessor.islowBreach(soc, socLimitHolder, socMessageList)==null? socProcessor.isHighBreach(soc, socLimitHolder, socMessageList) : null;
-    	/*if(socBreachMessage == null) {
-    		socBreachMessage = WarningMessageSelector.isWarning(soc, socLimitHolder, socMessageList);
-    		if(socBreachMessage == null)
-    		socBreachMessage = socProcessor.isHighBreach(soc, socLimitHolder, socMessageList);
-    	}*/
+    	socLimitHolder = new LimitCalculator(PERCENTAGE, HIGHER_SOC, LOWER_SOC, DOUBLE_LIMIT).getLimitHolder();
+    	socMessageList = new MessageGenerator("SOC").getOutputMessage();
+    	boolean socCheck = ParameterHandler.isSOCOk(soc);
     	printMessage(ParameterCheckMessage.breachMessage, "State of Charge");
     	
-    	MeasurementProcessor chargeRateProcessor = new MeasurementProcessor();
-    	float chargeRateLimitHolder[] = new LimitCalculator(PERCENTAGE, HIGHER_CHARGERATE, NORMAL_CHARGERATE, SINGLE_LIMIT).getLimitHolder();
-    	String chargeRateMessageList[] = new MessageGenerator("ChargeRate").getOutputMessage();
-    	chargeRateProcessor.singleLimitMessage(chargeRate, chargeRateLimitHolder, chargeRateMessageList);
-    	printMessage(ParameterCheckMessage.breachMessage, "Charge Rate");
-    	boolean temperatureCheck = temperatureProcessor.isStatus();
-    	boolean socCheck = socProcessor.isStatus();
-    	boolean chargeRateCheck = chargeRateProcessor.isStatus();
-    	
+    	chargeRateLimitHolder = new LimitCalculator(PERCENTAGE, HIGHER_CHARGERATE, NORMAL_CHARGERATE, SINGLE_LIMIT).getLimitHolder();
+    	chargeRateMessageList = new MessageGenerator("ChargeRate").getOutputMessage();
+    	boolean chargeRateCheck = ParameterHandler.isChargeRateOk(chargeRate);
+    	printMessage(ParameterCheckMessage.breachMessage, "Charge Rate");  	
+ 	
     	BreachHandler.isActionNeeded(temperatureCheck, "Temperature");
     	BreachHandler.isActionNeeded(socCheck, "Charge State");
     	BreachHandler.isActionNeeded(chargeRateCheck, "Charge Rate");

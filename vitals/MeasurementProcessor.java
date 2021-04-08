@@ -3,11 +3,11 @@ package vitals;
 import java.util.Arrays;
 
 public class MeasurementProcessor {
-	public boolean status = true;
+/*	public boolean status = true;
 
 	public boolean isStatus() {
 		return status;
-	}
+	}*/
 	
 	public void islowBreach(float value, float limitHolder[], String messageList[]) {
 		if(value > limitHolder[1] && value <= limitHolder[2])
@@ -21,27 +21,28 @@ public class MeasurementProcessor {
 		 //ParameterCheckMessage.breachMessage = value > limitHolder[4] ? messageList[4] : (value > limitHolder[3] && value <= limitHolder[4]?messageList[3]:messageList[2]);		
 	 }
 	 
-	 public void isViolates(float value, float limitHolder[], String messageList[]) {
+	 public boolean isViolates(float value, float limitHolder[], String messageList[]) {
 		 if(value > limitHolder[0] && value <= limitHolder[1]) {
 			 ParameterCheckMessage.breachMessage = messageList[0];
-			 this.status = false;
+			 return false;
 		 }
 		 if(value > limitHolder[4]) {
 			 ParameterCheckMessage.breachMessage = messageList[4];
-			 this.status = false;
+			 return false;
 		 }
+		 return true;
 		 
 	 }
 			
-			public void singleLimitMessage(float value, float limitHolder[], String messageList[]) {
-				if(value > limitHolder[1]) {
-					this.status = false;
+			public boolean singleLimitMessage(float value, float limitHolder[], String messageList[]) {
+				if(value > limitHolder[1]) {					
 					ParameterCheckMessage.breachMessage = messageList[2];
+					return false;
 					}
 				else if(value > limitHolder[0])
 					ParameterCheckMessage.breachMessage =  messageList[1];
 				else
 					ParameterCheckMessage.breachMessage = messageList[0];
-
+				return true;
 			}
 }
