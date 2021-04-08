@@ -51,8 +51,8 @@ public class Main {
     }
     
     public static void main(String[] args) {
-    	System.out.println(batteryIsOk(26, 66, 0.3f,"F") == true);
-    	System.out.println(batteryIsOk(1, 84, 0.9f,"C") == false);
-    	System.out.println(batteryIsOk(25,10,0.78f,"F") == true);
+    	assert(batteryIsOk(26, 66, 0.3f,"F") == true);
+    	assert(batteryIsOk(1, 84, 0.9f,"C") == false);
+    	assert(batteryIsOk(25,10,0.78f,"F") == true);
     }
 }
