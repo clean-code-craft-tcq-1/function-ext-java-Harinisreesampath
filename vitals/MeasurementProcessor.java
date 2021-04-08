@@ -12,17 +12,15 @@ public class MeasurementProcessor {
 	public void islowBreach(float value, float limitHolder[], String messageList[]) {
 		if(value > limitHolder[1] && value <= limitHolder[2])
 			ParameterCheckMessage.breachMessage = messageList[1];
-			//ParameterCheckMessage.breachMessage = value > limitHolder[0] && value <= limitHolder[1]? messageList[0]  : (value > limitHolder[1] && value <= limitHolder[2]?messageList[1]:null);
 	 }
 	 
 	 public void isHighBreach(float value, float limitHolder[], String messageList[]) {
 		 if(value > limitHolder[3] && value <= limitHolder[4])
 			 ParameterCheckMessage.breachMessage = messageList[3];
-		 //ParameterCheckMessage.breachMessage = value > limitHolder[4] ? messageList[4] : (value > limitHolder[3] && value <= limitHolder[4]?messageList[3]:messageList[2]);		
 	 }
 	 
 	 public boolean isViolates(float value, float limitHolder[], String messageList[]) {
-		 if(value > limitHolder[0] && value <= limitHolder[1]) {
+		 if(value < limitHolder[0]) {
 			 ParameterCheckMessage.breachMessage = messageList[0];
 			 return false;
 		 }
